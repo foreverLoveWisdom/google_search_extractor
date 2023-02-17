@@ -73,7 +73,7 @@ end
 
 group :test do
   # Strategies for cleaning databases. Can be used to ensure a clean slate for testing.
-  gem 'database_cleaner', '~> 2.0', '>= 2.0.1'
+  gem 'database_cleaner-active_record', '~> 2.0', '>= 2.0.1'
 
   # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'simplecov', '~> 0.22.0', require: false
@@ -131,5 +131,3 @@ gem 'sassc-rails', '>= 2.1.0'
 
 # Haml-rails provides Haml generators for Rails 5, 6, and 7
 gem 'haml-rails', '~> 2.1'
-
-gem 'html2haml'
