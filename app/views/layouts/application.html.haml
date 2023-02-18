@@ -22,4 +22,11 @@
             %li.nav-item
               = link_to "Contact", "#", class: "nav-link"
 
+      .container
+        - flash.each do |name, msg|
+          - if msg.is_a?(String)
+            .alert{ class: "alert-#{name == :notice ? 'success' : 'danger'} alert-dismissible fade show", role: "alert" }
+              %button{ type: "button", class: "btn-close", "data-bs-dismiss": "alert", "aria-label": "Close" }
+              = msg
+
       = yield

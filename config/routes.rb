@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   }
 
   resources :keywords, only: %i[new create]
+
+  root to: 'keywords#new'
 end
