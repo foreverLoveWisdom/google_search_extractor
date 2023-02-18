@@ -71,14 +71,6 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
 end
 
-group :test do
-  # Strategies for cleaning databases. Can be used to ensure a clean slate for testing.
-  gem 'database_cleaner-active_record', '~> 2.0', '>= 2.0.1'
-
-  # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
-  gem 'simplecov', '~> 0.22.0', require: false
-end
-
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
@@ -109,6 +101,15 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+
+  # Library for stubbing and setting expectations on HTTP requests in Ruby.
+  gem 'webmock', '~> 3.18', '>= 3.18.1'
+
+  # Strategies for cleaning databases. Can be used to ensure a clean slate for testing.
+  gem 'database_cleaner-active_record', '~> 2.0', '>= 2.0.1'
+
+  # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
+  gem 'simplecov', '~> 0.22.0', require: false
 end
 
 # A RuboCop extension focused on enforcing Rails best practices and coding conventions.
@@ -131,3 +132,9 @@ gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'
 
 # Bundle and transpile JavaScript in Rails with esbuild, rollup.js, or Webpack.
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'
+
+# Makes it easy and painless to work with XML and HTML from Ruby
+gem 'nokogiri', '~> 1.14', '>= 1.14.2'
+
+# A flexible authentication solution for Rails based on Warden
+gem 'devise', '~> 4.9'

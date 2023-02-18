@@ -1,0 +1,5 @@
+= form_with(url: keyword_files_path, local: true, method: :post, enctype: "multipart/form-data") do |form|
+  .form-group
+    = form.label :keyword_file
+    = form.file_field :keyword_file, class: "form-control"
+  = form.submit "Upload", class: "btn btn-primary"
