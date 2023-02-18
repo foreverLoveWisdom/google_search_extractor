@@ -9,6 +9,7 @@ AllCops:
    - 'db/migrate/*.rb'
    - 'config/environments/*.rb'
    - Gemfile
+   - config/routes.rb
 
   NewCops: enable
 
