@@ -82,4 +82,20 @@ RSpec.describe 'Authentication' do
       expect(page).to have_content('Invalid Email or password.')
     end
   end
+
+  context 'when signing out' do
+    pending 'signs out successfully'
+    # let(:user) { create(:user) }
+
+    # before do
+    #   sign_in user
+    #   visit root_path
+    # end
+
+    # it 'signs out successfully and redirects to home page' do
+    #   click_link 'Sign out'
+    #   expect(page).to have_current_path(root_path)
+    #   expect(page).to have_content('Signed out successfully.')
+    # end
+  end
 end
