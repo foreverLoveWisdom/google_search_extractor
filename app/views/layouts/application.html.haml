@@ -10,13 +10,13 @@
   %body
     .container-fluid
       %nav.navbar.navbar-expand-lg.navbar-light.bg-light
-        %a.navbar-brand{ href: "#" } Google Search Extractor
+        %a.navbar-brand{ href: root_path} Google Search Extractor
         %button.navbar-toggler{ type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNav", "aria-controls": "navbarNav", "aria-expanded": "false", "aria-label": "Toggle navigation" }
           %span.navbar-toggler-icon
         #navbarNav.collapse.navbar-collapse
           %ul.navbar-nav.ms-auto.mb-2.mb-lg-0
             %li.nav-item
-              = link_to "Home", "#", class: "nav-link"
+              = link_to "Home", root_path, class: "nav-link"
             %li.nav-item
               = link_to "About", "#", class: "nav-link"
             %li.nav-item
