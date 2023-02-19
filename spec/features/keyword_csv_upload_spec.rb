@@ -11,7 +11,7 @@ RSpec.describe 'Keyword CSV upload' do
   it 'when user uploads a CSV file of keywords successfully' do
     visit new_keyword_path
 
-    attach_file('keyword', Rails.root.join('spec/fixtures/files/keywords.csv'))
+    attach_file('keyword_file', Rails.root.join('spec/fixtures/files/keywords.csv'))
     click_button 'Upload'
 
     expect(page).to have_content('CSV file was uploaded successfully.')
@@ -21,19 +21,18 @@ RSpec.describe 'Keyword CSV upload' do
     it 'shows an error message if file is missing' do
       visit new_keyword_path
 
-      attach_file('keyword')
       click_button 'Upload'
 
-      expect(page).to have_content('Sorry, please upload a CSV file.')
+      expect(page).to have_content('The file must be in CSV format and must be present.')
     end
 
     it 'shows an error message if file is not a CSV' do
       visit new_keyword_path
 
-      attach_file('keyword')
+      attach_file('keyword_file', Rails.root.join('spec/fixtures/files/keywords.xlsx'))
       click_button 'Upload'
 
-      expect(page).to have_content('Sorry, only CSV files are allowed.')
+      expect(page).to have_content('The file must be in CSV format and must be present.')
     end
   end
 end

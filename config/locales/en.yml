@@ -32,3 +32,4 @@
 en:
   keywords:
     upload_csv_successfully: CSV file was uploaded successfully.
+    upload_csv_failed: The file must be in CSV format and must be present.
