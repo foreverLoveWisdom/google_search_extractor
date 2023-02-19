@@ -1,6 +1,6 @@
 ## Code Challenge Checklist
 
-* The goal of this checklist is to provide a step-by-step guide for completing the given code challenge. This list should be followed to complete the application, including all necessary features and requirements.
+- The goal of this checklist is to provide a step-by-step guide for completing the given code challenge. This list should be followed to complete the application, including all necessary features and requirements.
 
 ### Overall Checklist:
 
@@ -11,7 +11,9 @@
 - [] Implement both a web interface and optional API.
 - [] Use PostgreSQL and write tests using a framework of your choice.
 - [] Deploy the application to a cloud provider (optional).
-- [] Web UI Checklist
+
+### Web UI Checklist:
+
 - [] Implement sign in and sign up screens.
 - [] Implement a feature that allows authenticated users to upload a CSV file of keywords.
 - [] Implement a feature that allows users to view the list of their uploaded keywords.
@@ -39,3 +41,8 @@
 ### Optional Checklist:
 
 - [] Deploy the application to a cloud provider such as Heroku, AWS, Google Cloud, or Digital Ocean.
+
+### Notes:
+
+- The beginning commits are a bit messy 🤦 🤷
+- Since the CSV_upload feature, follow [ Git Flow ](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) , with Pull Request created to merge into the `develop` branch

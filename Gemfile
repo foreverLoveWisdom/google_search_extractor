@@ -75,11 +75,6 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
-  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
   # Brakeman is a static analysis tool which checks Ruby on Rails applications for security vulnerabilities.
   gem 'brakeman', '~> 5.4'
 
@@ -94,6 +89,9 @@ group :development do
 
   # Guard::RSpec automatically run your specs (much like autotest).
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
+
+  # Annotates Rails/ActiveRecord Models, routes, fixtures, and others based on the database schema.
+  gem 'annotate', '~> 3.2'
 end
 
 group :test do
@@ -138,3 +136,6 @@ gem 'nokogiri', '~> 1.14', '>= 1.14.2'
 
 # A flexible authentication solution for Rails based on Warden
 gem 'devise', '~> 4.9'
+
+# Validations for Active Storage (presence)
+gem 'active_storage_validations', '~> 1.0', '>= 1.0.3'

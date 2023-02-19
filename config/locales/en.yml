@@ -30,4 +30,6 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  keywords:
+    upload_csv_successfully: CSV file was uploaded successfully.
+    upload_csv_failed: The file must be in CSV format and must be present.
