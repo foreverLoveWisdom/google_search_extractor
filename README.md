@@ -11,7 +11,9 @@
 - [] Implement both a web interface and optional API.
 - [] Use PostgreSQL and write tests using a framework of your choice.
 - [] Deploy the application to a cloud provider (optional).
-- [] Web UI Checklist
+
+### Web UI Checklist:
+
 - [] Implement sign in and sign up screens.
 - [] Implement a feature that allows authenticated users to upload a CSV file of keywords.
 - [] Implement a feature that allows users to view the list of their uploaded keywords.
