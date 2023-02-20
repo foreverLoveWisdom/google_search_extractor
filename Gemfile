@@ -56,7 +56,7 @@ group :development, :test do
   gem 'pry-byebug', '~> 3.10', '>= 3.10.1'
 
   # Great Ruby debugging companion: pretty print Ruby objects to visualize their structure
-  gem 'awesome_print', '~> 1.9', '>= 1.9.2'
+  # gem 'awesome_print', '~> 1.9', '>= 1.9.2'
 
   # Use Pry as your rails console
   gem 'pry-rails', '~> 0.3.9'
@@ -97,7 +97,6 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
   gem "webdrivers"
 
   # Library for stubbing and setting expectations on HTTP requests in Ruby.
@@ -139,3 +138,12 @@ gem 'devise', '~> 4.9'
 
 # Validations for Active Storage (presence)
 gem 'active_storage_validations', '~> 1.0', '>= 1.0.3'
+
+# Automating interaction with websites
+gem 'mechanize', '~> 2.8', '>= 2.8.5'
+
+# Implements the W3C WebDriver protocol to automate popular browsers
+gem 'selenium-webdriver', '~> 4.8', '>= 4.8.1'
+
+# Generating valid web user agents
+gem 'fake_useragent', '~> 1.0', '>= 1.0.2'
