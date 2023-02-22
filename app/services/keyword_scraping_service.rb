@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 # Keywords scraping service logic
+# Consider to extract Selenium related logic to a separate class
+# and use dependency injection to inject it into this service
+# to make it easier to test
+# Ask chatbot to help here. How can I separate Selenium related logic and inject it
 class KeywordScrapingService
   prepend SimpleCommand
   include ActiveModel::Validations
@@ -21,7 +25,7 @@ class KeywordScrapingService
 
     setup_search_data
     total_search_result, link_elements, ad_elements = extract_search_data
-    @driver.quit
+    quit_driver
 
     build_search_result(total_search_result, link_elements, ad_elements)
   end
@@ -37,17 +41,19 @@ class KeywordScrapingService
     wait_until_search_result_displayed
   end
 
-  def create_headless_chrome_driver
-    options = Selenium::WebDriver::Chrome::Options.new
+  def create_headless_chrome_driver(web_driver = Selenium::WebDriver)
+    web_driver.for(:chrome, options: add_driver_options)
+  end
+
+  def add_driver_options(options = Selenium::WebDriver::Chrome::Options.new)
     options.add_argument('--headless')
     options.add_argument("user-agent=#{user_agent}")
-
-    Selenium::WebDriver.for(:chrome, options:)
+    options
   end
 
   # TODO: Add a double to test this method
-  def user_agent
-    generate_user_agent(navigator: 'chrome')
+  def user_agent(custom_user_agent = 'chrome')
+    generate_user_agent(navigator: custom_user_agent)
   end
 
   def navigate_to_scraping_url
@@ -60,8 +66,8 @@ class KeywordScrapingService
     search_bar.submit
   end
 
-  def wait_until_search_result_displayed
-    wait = Selenium::WebDriver::Wait.new(timeout: TIMEOUT)
+  def wait_until_search_result_displayed(wait_driver = Selenium::WebDriver::Wait)
+    wait = wait_driver.new(timeout: TIMEOUT)
     wait.until { @driver.find_element(id: SEARCH_RESULT).displayed? }
   end
 

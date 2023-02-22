@@ -21,4 +21,6 @@
 #
 class Keyword < ApplicationRecord
   belongs_to :user
+
+  enum status: { processing: 2, success: 1, fail: 0 }
 end

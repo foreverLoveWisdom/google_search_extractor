@@ -24,4 +24,6 @@ class User < ApplicationRecord
 
   has_one_attached :keyword_file
   validates :keyword_file, content_type: 'text/csv'
+
+  has_many :keywords, dependent: :destroy
 end
