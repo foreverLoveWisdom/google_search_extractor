@@ -22,5 +22,19 @@ FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
     password { Faker::Internet.password(min_length: 6) }
+
+    trait :with_keywords do
+      transient do
+        keywords_file { Rails.root.join('spec/fixtures/files/keywords.csv') }
+      end
+
+      after(:build) do |user, evaluator|
+        user.keyword_file.attach(
+          io: evaluator.keywords_file.open,
+          filename: File.basename(evaluator.keywords_file),
+          content_type: 'text/csv'
+        )
+      end
+    end
   end
 end
