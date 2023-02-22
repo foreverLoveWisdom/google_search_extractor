@@ -19,7 +19,7 @@ class KeywordScrapingJob < ApplicationJob
                                        file_parser_service.result,
                                        dependencies[:keyword_scraping_handler_service])
     else
-      Rails.logger.error file_parser_service.errors.full_messages.to_sentence
+      log_errors file_parser_service.errors.full_messages.to_sentence
     end
   end
 
@@ -31,5 +31,9 @@ class KeywordScrapingJob < ApplicationJob
 
   def execute_scraping_handler_service(user_id, keywords, scraping_handler_service)
     scraping_handler_service.new(user_id:, keywords:).call
+  end
+
+  def log_errors(error)
+    Rails.logger.error error
   end
 end

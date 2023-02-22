@@ -17,29 +17,17 @@ class KeywordScrapingHandlerService
     @scraping_service = dependencies[:scraping_service]
     @keyword_repository = dependencies[:keyword_repository]
     @search_result_repository = dependencies[:search_result_repository]
+    @created_search_result_ids = []
   end
 
   def call
     return unless valid?
 
-    created_search_result_ids = []
-
     keywords.each do |keyword|
-      @persisted_keyword = create_keyword!(keyword)
-      scraper = KeywordScrapingService.call(keyword)
-
-      if scraper.success?
-        update_keyword_status!(Keyword.statuses[:success])
-        persisted_search_result = create_search_result!
-        created_search_result_ids << persisted_search_result.id
-      else
-        update_keyword_status!(Keyword.statuses[:fail])
-        errors.add(:base, I18n.t('keyword_scraping_handler_service.errors.scraper_failed', keyword:))
-      end
+      scraper = create_keyword_and_execute_scraper(keyword)
+      process_scraping_result(scraper, keyword)
     rescue ActiveRecord::RecordInvalid => e
-      Rails.logger.error e.message
-      Rails.logger.error e.backtrace.inspect
-      errors.add(:base, I18n.t('keyword_scraping_handler_service.errors.record_invalid'))
+      handle_exception_for(e)
       next
     end
 
@@ -52,10 +40,45 @@ class KeywordScrapingHandlerService
               :keywords,
               :scrapping_service,
               :keyword_repository,
-              :search_result_repository
+              :search_result_repository,
+              :created_search_result_ids
+
+  def create_keyword_and_execute_scraper(keyword)
+    @persisted_keyword = create_keyword!(keyword)
+    KeywordScrapingService.call(keyword)
+  end
 
   def create_keyword!(keyword)
     keyword_repository.create!(user_id:, keyword:)
+  end
+
+  def process_scraping_result(scraper, keyword)
+    if scraper.success?
+      handle_scraping_success
+    else
+      handle_scraping_failure(keyword)
+    end
+  end
+
+  def handle_scraping_success
+    update_keyword_status!(Keyword.statuses[:success])
+    persisted_search_result = create_search_result!
+    created_search_result_ids << persisted_search_result.id
+  end
+
+  def handle_scraping_failure(keyword)
+    update_keyword_status!(Keyword.statuses[:fail])
+    errors.add(:base, I18n.t('keyword_scraping_handler_service.errors.scraper_failed', keyword:))
+  end
+
+  def handle_exception_for(exception)
+    log_error_and_backtrace(exception)
+    errors.add(:base, I18n.t('keyword_scraping_handler_service.errors.record_invalid'))
+  end
+
+  def log_error_and_backtrace(error)
+    Rails.logger.error error.message
+    Rails.logger.error error.backtrace.inspect
   end
 
   def update_keyword_status!(status)
