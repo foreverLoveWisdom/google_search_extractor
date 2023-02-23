@@ -24,9 +24,13 @@
 FactoryBot.define do
   factory :search_result do
     keyword { nil }
-    adwords_advertisers { 1 }
-    total_links { 1 }
-    total_search_results { 'MyString' }
-    html { 'MyString' }
+    adwords_advertisers { rand(100) }
+    total_links { rand(100) }
+    total_search_results do
+      "About #{rand(1..9)},000,000 results (#{Faker::Number.between(from: 0.009, to: 0.001).round(3)} seconds)"
+    end
+    html do
+      "<html><head><title>#{Faker::Lorem.word}</title></head><body><h1>#{Faker::Lorem.sentence}</h1></body></html>"
+    end
   end
 end

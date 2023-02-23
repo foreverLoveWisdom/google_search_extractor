@@ -6,7 +6,13 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :keywords, only: %i[new create]
+  authenticated :user do
+    resources :keywords, only: %i[index show new create]
+  end
+
+  unauthenticated do
+    get '*path' => redirect('/users/sign_in')
+  end
 
   root to: 'keywords#new'
 end

@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Keyword CSV upload' do
+  let(:user) { create(:user) }
+
   before do
-    user = create(:user)
     sign_in user
   end
 
@@ -33,6 +34,16 @@ RSpec.describe 'Keyword CSV upload' do
       click_button 'Upload'
 
       expect(page).to have_content('The file must be in CSV format and must be present.')
+    end
+  end
+
+  context 'when user is not signed in' do
+    include_context 'when user is not signed in'
+
+    it 'redirects user to sign in path' do
+      visit new_keyword_path
+
+      expect_to_be_redirected_to_sign_in_page
     end
   end
 end
