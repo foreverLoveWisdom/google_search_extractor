@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 # Keywords scraping service logic
-# Consider to extract Selenium related logic to a separate class
-# and use dependency injection to inject it into this service
-# to make it easier to test
-# Ask chatbot to help here. How can I separate Selenium related logic and inject it
 class KeywordScrapingService
   prepend SimpleCommand
   include ActiveModel::Validations
@@ -26,7 +22,6 @@ class KeywordScrapingService
     setup_search_data
     total_search_result, link_elements, ad_elements = extract_search_data
     quit_driver
-
     build_search_result(total_search_result, link_elements, ad_elements)
   end
 
@@ -51,7 +46,6 @@ class KeywordScrapingService
     options
   end
 
-  # TODO: Add a double to test this method
   def user_agent(custom_user_agent = 'chrome')
     generate_user_agent(navigator: custom_user_agent)
   end
@@ -87,7 +81,6 @@ class KeywordScrapingService
     }
   end
 
-  # TODO: Add a double to test this method
   def quit_driver
     @driver.quit
   end

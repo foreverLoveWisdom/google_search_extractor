@@ -4,18 +4,18 @@
 
 ### Overall Checklist:
 
-- [] Create a web application to extract large amounts of data from the Google search results page.
+- [x] Create a web application to extract large amounts of data from the Google search results page.
 - [] Find a way to work around the limitations of mass-searching keywords.
 - [] Store the extracted data and display it back to the users.
-- [] Users must be authenticated to use the application.
+- [x] Users must be authenticated to use the application.
 - [] Implement both a web interface and optional API.
-- [] Use PostgreSQL and write tests using a framework of your choice.
+- [x] Use PostgreSQL and write tests using a framework of your choice.
 - [] Deploy the application to a cloud provider (optional).
 
 ### Web UI Checklist:
 
-- [] Implement sign in and sign up screens.
-- [] Implement a feature that allows authenticated users to upload a CSV file of keywords.
+- [x] Implement sign in and sign up screens.
+- [x] Implement a feature that allows authenticated users to upload a CSV file of keywords.
 - [] Implement a feature that allows users to view the list of their uploaded keywords.
 - [] Implement a feature that allows users to view the search result information stored in the database for each keyword.
 - [] Implement a search feature that allows users to search across all reports.
@@ -29,10 +29,10 @@
 
 ### Technical Requirements Checklist:
 
-- [] Choose a web framework of your choice.
+- [x] Choose a web framework of your choice.
 - [x] Use PostgreSQL as the database.
-- [] Use front-end frameworks like Bootstrap, Tailwind, or Foundation to create the user interface.
-- [] Use SASS as the CSS preprocessor.
+- [x] Use front-end frameworks like Bootstrap, Tailwind, or Foundation to create the user interface.
+- [x] Use SASS as the CSS preprocessor.
 - [x] Write tests using a framework of your choice.
 - [x] Use Git during the development process.
 - [x] Push code to a public repository on Github or Gitlab.
@@ -44,5 +44,5 @@
 
 ### Notes:
 
-- The beginning commits are a bit messy 🤦 🤷
-- Since the CSV_upload feature, follow [ Git Flow ](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) , with Pull Request created to merge into the `develop` branch
+- The beginning commits are a bit messy 🙈💦🧹
+- Since the CSV_upload feature, follow [ Git Flow ](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) , with Pull Request created to merge into the `develop` branch 🙏💡🌱
