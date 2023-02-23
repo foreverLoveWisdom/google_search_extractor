@@ -4,6 +4,14 @@
 class KeywordsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @keywords = current_user.keywords
+  end
+
+  def show
+    @keyword = current_user.keywords.find(params[:id])
+  end
+
   def new; end
 
   def create

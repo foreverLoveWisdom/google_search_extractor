@@ -21,8 +21,23 @@
 #
 FactoryBot.define do
   factory :keyword do
-    user { nil }
-    name { 'MyString' }
-    status { 1 }
+    name { Faker::Lorem.word }
+    association :user, factory: :user
+
+    trait :processing do
+      status { 2 }
+    end
+
+    trait :success do
+      status { 1 }
+
+      after(:create) do |keyword|
+        create(:search_result, keyword:)
+      end
+    end
+
+    trait :fail do
+      status { 0 }
+    end
   end
 end

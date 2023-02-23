@@ -1,0 +1,21 @@
+.row
+  .col-md-8.offset-md-2
+    %h1= @keyword.name
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Total Number of AdWords
+          %th Total Number of Links
+          %th Total Search Results
+          %th HTML Source Code
+      - search_result = @keyword.search_result
+      %tbody
+        %tr
+          %td= search_result.adwords_advertisers
+          %td= search_result.total_links
+          %td= search_result.total_search_results
+          %td= search_result.html
+
+.row
+  .col-md-8.offset-md-2
+    = link_to "Back to keywords", keywords_path, class: "btn btn-secondary"

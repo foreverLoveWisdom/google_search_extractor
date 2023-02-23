@@ -21,6 +21,7 @@
 #
 class Keyword < ApplicationRecord
   belongs_to :user
+  has_one :search_result, dependent: :destroy
 
   enum status: { processing: 2, success: 1, fail: 0 }
 end
