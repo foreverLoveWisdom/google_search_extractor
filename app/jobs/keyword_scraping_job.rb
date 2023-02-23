@@ -9,7 +9,7 @@ class KeywordScrapingJob < ApplicationJob
               dependencies: { storage_service: ActiveStorage::Blob,
                               keyword_file_parser_service: KeywordFileParserService,
                               keyword_scraping_handler_service: KeywordScrapingHandlerService })
-    keyword_file = dependencies[:storage_service].find_by(key: keyword_file_key)
+    keyword_file = search_keyword_file_in_storage(keyword_file_key, dependencies[:storage_service])
     return if keyword_file.blank?
 
     file_parser_service = parse_keywords(keyword_file, dependencies[:keyword_file_parser_service])
@@ -24,6 +24,10 @@ class KeywordScrapingJob < ApplicationJob
   end
 
   private
+
+  def search_keyword_file_in_storage(keyword_file_key, storage_service)
+    storage_service.find_by(key: keyword_file_key)
+  end
 
   def parse_keywords(keyword_file, file_parser_service)
     file_parser_service.new(keyword_file).call
