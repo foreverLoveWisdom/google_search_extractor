@@ -360,3 +360,5 @@ Metrics/BlockLength:
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+RSpec/NestedGroups:
+  Enabled: false
