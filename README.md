@@ -47,3 +47,35 @@
 - The beginning commits are a bit messy 🙈💦🧹
 - Since the CSV_upload feature, follow [ Git Flow ](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) , with Pull Request created to merge into the `develop` branch 🙏💡🌱
 - 🙏 Regrettably, due to time constraints, I couldn't include the optional API endpoints, but I'm fully committed to completing them over the weekend while eagerly anticipating your feedback. 💪🤞🤗
+
+### 💻 Requirements:
+
+- Ruby 3.2.1
+- PostgreSQL
+
+### 🛠️ Installation:
+
+- Clone this repository.
+- Run bundle install to install the required gems.
+- Run rails db:create to create the database.
+- Run rails db:migrate to run migrations.
+- Run rails db:seed to seed the database with sample data.
+- Run rails server to start the Rails server.
+- Open your browser and go to http://localhost:3000/ to see the application running.
+
+### 🔍 Running Tests:
+
+- This application uses RSpec for testing. To run all tests, run the following command: `bundle exec rspec`
+- Make sure you have installed all the development dependencies by running bundle install --with development.
+
+### 🤖 Guard:
+
+- You can also use guard to run your tests automatically every time you make a change to your files. Run the following command to start guard:`bundle exec guard`
+
+### 🤝 Contributing:
+
+- Contributions, issues and feature requests are welcome!
+
+### 📜 License:
+
+- This project is licensed under the MIT License - see the LICENSE file for details.
