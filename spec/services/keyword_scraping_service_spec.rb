@@ -19,6 +19,14 @@ RSpec.describe KeywordScrapingService do
     let(:result_stats) { instance_double(Selenium::WebDriver::Element) }
     let(:link_elements) { [instance_double(Selenium::WebDriver::Element)] }
     let(:ad_elements) { [instance_double(Selenium::WebDriver::Element)] }
+    let(:extracted_scrape_data) do
+      {
+        total_search_results: 'About 123,456,789 results (0.65 seconds)',
+        total_links: 1,
+        adwords_advertisers: 1,
+        html: '<html></html>'
+      }
+    end
 
     before do
       allow(Selenium::WebDriver::Chrome::Options).to receive(:new).and_return(double.as_null_object)
@@ -31,17 +39,14 @@ RSpec.describe KeywordScrapingService do
       allow(result_stats).to receive(:text).and_return('About 123,456,789 results (0.65 seconds)')
       allow(driver).to receive(:find_elements).with(:css, 'a').and_return(link_elements)
       allow(driver).to receive(:find_elements).with(:xpath, "//span[contains(text(), 'Ad')]").and_return(ad_elements)
+      allow(driver).to receive(:page_source).and_return('<html></html>')
       allow(result_stats).to receive(:displayed?).and_return(true)
       allow(driver).to receive(:quit)
     end
 
     context 'when keyword is valid' do
-      it 'returns total search result, total links and total ads' do
-        expect(result).to eq({
-                               total_search_result: 'About 123,456,789 results (0.65 seconds)',
-                               total_links: 1,
-                               total_ads: 1
-                             })
+      it 'returns extracted scrape data' do
+        expect(result).to eq(extracted_scrape_data)
       end
     end
 

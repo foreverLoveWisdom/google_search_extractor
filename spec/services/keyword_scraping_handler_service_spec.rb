@@ -16,13 +16,23 @@ RSpec.describe KeywordScrapingHandlerService do
       }
     end
 
+    let(:extracted_scrape_data) do
+      { adwords_advertisers: 1,
+        html: "alert('HTML!!')",
+        total_links: 12,
+        total_search_results: 'About 605,000,000 results (0.42 seconds)' }
+    end
+
     context 'when succeeds' do
       let(:persisted_keyword) { instance_double(Keyword, id: 1, status: Keyword.statuses[:success], user_id:) }
       let(:persisted_search_result) { instance_double(SearchResult, id: 1) }
       let(:keyword_repository) do
         instance_double(KeywordRepository, create!: persisted_keyword, update!: persisted_keyword)
       end
-      let(:scraper) { instance_double(dependencies[:scraping_service], success?: true) }
+      let(:scraper) do
+        instance_double(dependencies[:scraping_service], success?: true,
+                                                         result: extracted_scrape_data)
+      end
 
       before do
         allow(dependencies[:scraping_service]).to receive(:call).and_return(scraper)
@@ -41,9 +51,11 @@ RSpec.describe KeywordScrapingHandlerService do
     end
 
     context 'when fails' do
+      # rubocop:disable Layout/LineLength
       let(:general_error_message) do
         "We're sorry, something went wrong on our end. Please try again later or contact support if the problem persists. We apologize for the inconvenience."
       end
+      # rubocop:enable Layout/LineLength
 
       context 'when scraping service fails' do
         let(:persisted_keyword) { instance_double(Keyword, id: 1, status: Keyword.statuses[:fail], user_id:) }
@@ -73,7 +85,9 @@ RSpec.describe KeywordScrapingHandlerService do
         let(:keyword_repository) do
           instance_double(KeywordRepository, create!: persisted_keyword, update!: persisted_keyword)
         end
-        let(:scraper) { instance_double(dependencies[:scraping_service], success?: true) }
+        let(:scraper) do
+          instance_double(dependencies[:scraping_service], success?: true, result: extracted_scrape_data)
+        end
 
         before do
           allow(dependencies[:scraping_service]).to receive(:call).and_return(scraper)
@@ -95,7 +109,9 @@ RSpec.describe KeywordScrapingHandlerService do
         let(:keyword_repository) do
           instance_double(KeywordRepository, create!: persisted_keyword, update!: persisted_keyword)
         end
-        let(:scraper) { instance_double(dependencies[:scraping_service], success?: true) }
+        let(:scraper) do
+          instance_double(dependencies[:scraping_service], success?: true, result: extracted_scrape_data)
+        end
 
         before do
           allow(dependencies[:scraping_service]).to receive(:call).and_return(scraper)

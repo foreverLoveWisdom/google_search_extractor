@@ -6,9 +6,9 @@
 #
 #  id                   :bigint           not null, primary key
 #  adwords_advertisers  :integer
-#  html                 :string
-#  total_links          :integer
-#  total_search_results :string
+#  html                 :string           not null
+#  total_links          :integer          not null
+#  total_search_results :string           not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  keyword_id           :bigint           not null

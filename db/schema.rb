@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_218_045_331) do
+ActiveRecord::Schema[7.0].define(version: 20_230_224_114_449) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -47,19 +47,21 @@ ActiveRecord::Schema[7.0].define(version: 20_230_218_045_331) do
 
   create_table 'keywords', force: :cascade do |t|
     t.bigint 'user_id', null: false
-    t.string 'name'
-    t.integer 'status'
+    t.string 'name', null: false
+    t.integer 'status', default: 2
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['name'], name: 'index_keywords_on_name'
+    t.index ['status'], name: 'index_keywords_on_status'
     t.index ['user_id'], name: 'index_keywords_on_user_id'
   end
 
   create_table 'search_results', force: :cascade do |t|
     t.bigint 'keyword_id', null: false
     t.integer 'adwords_advertisers'
-    t.integer 'total_links'
-    t.string 'total_search_results'
-    t.string 'html'
+    t.integer 'total_links', null: false
+    t.string 'total_search_results', null: false
+    t.string 'html', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['keyword_id'], name: 'index_search_results_on_keyword_id'

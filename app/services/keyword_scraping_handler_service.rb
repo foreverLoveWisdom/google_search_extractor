@@ -24,8 +24,8 @@ class KeywordScrapingHandlerService
     return unless valid?
 
     keywords.each do |keyword|
-      scraper = create_keyword_and_execute_scraper(keyword)
-      process_scraping_result(scraper, keyword)
+      @scraper = create_keyword_and_execute_scraper(keyword)
+      process_scraping_result(keyword)
     rescue ActiveRecord::RecordInvalid => e
       handle_exception_for(e)
       next
@@ -49,11 +49,11 @@ class KeywordScrapingHandlerService
   end
 
   def create_keyword!(keyword)
-    keyword_repository.create!(user_id:, keyword:)
+    keyword_repository.create!(user_id:, name: keyword)
   end
 
-  def process_scraping_result(scraper, keyword)
-    if scraper.success?
+  def process_scraping_result(keyword)
+    if @scraper.success?
       handle_scraping_success
     else
       handle_scraping_failure(keyword)
@@ -76,16 +76,16 @@ class KeywordScrapingHandlerService
     errors.add(:base, I18n.t('keyword_scraping_handler_service.errors.record_invalid'))
   end
 
-  def log_error_and_backtrace(error)
-    Rails.logger.error error.message
-    Rails.logger.error error.backtrace.inspect
+  def log_error_and_backtrace(exception)
+    Rails.logger.error exception.message
+    Rails.logger.error exception.backtrace.inspect
   end
 
   def update_keyword_status!(status)
-    keyword_repository.update!(@persisted_keyword.id, status)
+    keyword_repository.update!(@persisted_keyword.id, status:)
   end
 
   def create_search_result!
-    search_result_repository.create!(keyword_id: @persisted_keyword.id)
+    search_result_repository.create!({ keyword_id: @persisted_keyword.id }.merge(@scraper.result))
   end
 end

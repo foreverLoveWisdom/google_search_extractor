@@ -6,3 +6,6 @@ en:
     errors:
       scraper_failed: "The scraping for the keyword: %{keyword}, has failed."
       record_invalid: We're sorry, something went wrong on our end. Please try again later or contact support if the problem persists. We apologize for the inconvenience.
+  keyword_scraping_service:
+    errors:
+      failed_to_scrape: "Something is wrong when scraping for: %{keyword}."

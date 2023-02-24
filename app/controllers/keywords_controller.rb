@@ -16,7 +16,7 @@ class KeywordsController < ApplicationController
 
   def create
     if can_attach_keyword_file?
-      KeywordScrapingJob.perform_later(current_user.id, current_user.keyword_file.key)
+      KeywordScrapingJob.perform_later(user_id: current_user.id, keyword_file_key: current_user.keyword_file.key)
       redirect_to root_path, notice: I18n.t('keywords.upload_csv_successfully')
     else
       redirect_to root_path, alert: I18n.t('keywords.upload_csv_failed')
