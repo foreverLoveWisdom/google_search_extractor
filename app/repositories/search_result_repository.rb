@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+# Decouple the SearchResult data access layer from the rest of the application
 class SearchResultRepository
+  delegate :create!, to: :model
+
   def initialize(model = SearchResult)
     @model = model
   end
 
-  delegate :create!, to: :model
+  private
 
   attr_reader :model
 end

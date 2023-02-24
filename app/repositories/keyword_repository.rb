@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 
+# Decouple the Keyword data access layer from the rest of the application
 class KeywordRepository
+  delegate :create!, to: :model
+  delegate :update!, to: :model
+
   def initialize(model = Keyword)
     @model = model
   end
 
-  delegate :create!, to: :model
-  delegate :update!, to: :model
+  def search(keyword, user_id)
+    Keyword.includes(:search_result)
+           .where(user_id:)
+           .where('keywords.name ILIKE ?', "%#{keyword}%")
+  end
 
   private
 

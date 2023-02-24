@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   authenticated :user do
     resources :keywords, only: %i[index show new create]
+    get 'search', to: 'search#index'
   end
 
   unauthenticated do
