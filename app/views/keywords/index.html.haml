@@ -4,15 +4,11 @@
     %table.table.table-striped
       %thead
         %tr
-          %th Keyword
-          %th Status
-          %th Created At
+          = render 'headers'
       %tbody
         - @keywords.each do |keyword|
           %tr{id: dom_id(keyword)}
-            %td= link_to(keyword.name, keyword_path(keyword))
-            %td= keyword.status.humanize
-            %td= format_date(keyword.created_at)
+            = render partial: 'infor', locals: { keyword: keyword, include_link: true }
 
 .row
   .col-md-8.offset-md-2

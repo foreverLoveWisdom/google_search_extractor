@@ -4,17 +4,11 @@
     %table.table.table-striped
       %thead
         %tr
-          %th Total Number of AdWords
-          %th Total Number of Links
-          %th Total Search Results
-          %th HTML Source Code
+          = render 'search_result_headers'
       - search_result = @keyword.search_result
       %tbody
         %tr
-          %td= search_result.adwords_advertisers
-          %td= search_result.total_links
-          %td= search_result.total_search_results
-          %td= search_result.html
+          = render 'search_result_infor', search_result: search_result
 
 .row
   .col-md-8.offset-md-2

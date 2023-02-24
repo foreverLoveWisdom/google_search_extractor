@@ -10,6 +10,8 @@ class KeywordRepository
   end
 
   def search(keyword, user_id)
+    return if keyword.blank? || user_id.blank?
+
     Keyword.includes(:search_result)
            .where(user_id:)
            .where('keywords.name ILIKE ?', "%#{keyword}%")

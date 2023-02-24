@@ -1,0 +1,11 @@
+%table.table.table-striped
+  %thead
+    %tr
+      = render 'keywords/headers'
+      = render 'keywords/search_result_headers'
+  %tbody
+    - @keywords.each do |keyword|
+      - search_result = keyword.search_result
+      %tr{id: dom_id(keyword)}
+        = render partial: 'keywords/infor', locals: { keyword: keyword }
+        = render 'keywords/search_result_infor', search_result: search_result
