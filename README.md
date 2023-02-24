@@ -5,8 +5,8 @@
 ### Overall Checklist:
 
 - [x] Create a web application to extract large amounts of data from the Google search results page.
-- [] Find a way to work around the limitations of mass-searching keywords.
-- [] Store the extracted data and display it back to the users.
+- [x] Find a way to work around the limitations of mass-searching keywords.
+- [x] Store the extracted data and display it back to the users.
 - [x] Users must be authenticated to use the application.
 - [] Implement both a web interface and optional API.
 - [x] Use PostgreSQL and write tests using a framework of your choice.
@@ -16,9 +16,9 @@
 
 - [x] Implement sign in and sign up screens.
 - [x] Implement a feature that allows authenticated users to upload a CSV file of keywords.
-- [] Implement a feature that allows users to view the list of their uploaded keywords.
-- [] Implement a feature that allows users to view the search result information stored in the database for each keyword.
-- [] Implement a search feature that allows users to search across all reports.
+- [x] Implement a feature that allows users to view the list of their uploaded keywords.
+- [x] Implement a feature that allows users to view the search result information stored in the database for each keyword.
+- [x] Implement a search feature that allows users to search across all reports.
 
 ### API Checklist(Optional):
 
@@ -46,3 +46,4 @@
 
 - The beginning commits are a bit messy 🙈💦🧹
 - Since the CSV_upload feature, follow [ Git Flow ](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) , with Pull Request created to merge into the `develop` branch 🙏💡🌱
+- 🙏 Regrettably, due to time constraints, I couldn't include the optional API endpoints, but I'm fully committed to completing them over the weekend while eagerly anticipating your feedback. 💪🤞🤗

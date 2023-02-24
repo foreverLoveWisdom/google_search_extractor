@@ -8,10 +8,11 @@ Rails.application.routes.draw do
 
   authenticated :user do
     resources :keywords, only: %i[index show new create]
+    get 'search', to: 'search#index'
   end
 
   unauthenticated do
-    get '*path' => redirect('/users/sign_in')
+    match '*path' => redirect('/users/sign_in'), via: %i[get post put patch delete]
   end
 
   root to: 'keywords#new'

@@ -1,0 +1,7 @@
+- if local_assigns[:include_link] || false
+  %td= link_to(keyword.name, keyword_path(keyword))
+- else
+  %td= keyword.name
+
+%td= keyword.status.humanize
+%td= format_date(keyword.created_at)

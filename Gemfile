@@ -141,6 +141,3 @@ gem 'active_storage_validations', '~> 1.0', '>= 1.0.3'
 
 # Implements the W3C WebDriver protocol to automate popular browsers
 gem 'selenium-webdriver', '~> 4.8', '>= 4.8.1'
-
-# Generating valid web user agents
-gem 'fake_useragent', '~> 1.0', '>= 1.0.2'

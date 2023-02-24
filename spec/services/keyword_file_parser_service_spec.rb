@@ -7,6 +7,7 @@ RSpec.describe KeywordFileParserService do
 
   let(:result) { keyword_file_parser_service.result }
   let(:file) { user.keyword_file }
+  let(:escaped_malicious_input) { CGI.escapeHTML("alert('hello world');") }
 
   describe '#call' do
     let(:user) { create(:user, :with_keywords) }
@@ -16,6 +17,20 @@ RSpec.describe KeywordFileParserService do
       context 'when csv has records' do
         it 'returns an array of keywords' do
           expect(result).to eq(expected_keywords)
+        end
+
+        it 'succeeds' do
+          expect(keyword_file_parser_service).to be_success
+        end
+      end
+
+      context 'when csv has malicious input' do
+        let(:user) do
+          create(:user, :with_keywords, keywords_file: Rails.root.join('spec/fixtures/files/malicious.csv'))
+        end
+
+        it 'returns escaped keyword' do
+          expect(result).to include(escaped_malicious_input)
         end
 
         it 'succeeds' do
