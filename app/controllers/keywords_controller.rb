@@ -5,11 +5,11 @@ class KeywordsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @keywords = current_user.keywords
+    @keywords = keyword_repository.find_all_by_user(current_user.id)
   end
 
   def show
-    @keyword = current_user.keywords.find(params[:id])
+    @keyword = keyword_repository.find_by(id: params[:id], user_id: current_user.id)
   end
 
   def new; end
@@ -31,5 +31,9 @@ class KeywordsController < ApplicationController
 
   def keyword_params
     params.permit(:keyword_file)[:keyword_file]
+  end
+
+  def keyword_repository
+    @keyword_repository ||= KeywordRepository.new
   end
 end

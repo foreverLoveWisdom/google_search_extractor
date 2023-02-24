@@ -19,8 +19,8 @@ RSpec.describe KeywordRepository do
 
       let(:keyword_search) { keyword_repository.search(keyword, user_id) }
 
-      it 'returns all matching keywords' do
-        expect(keyword_search).to match_array(matching_keywords)
+      it 'returns all matching keywords ordered by name ASC' do
+        expect(keyword_search).to match_array(matching_keywords.sort_by(&:name))
       end
 
       it 'returns corresponding search results' do

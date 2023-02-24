@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   unauthenticated do
-    get '*path' => redirect('/users/sign_in')
+    match '*path' => redirect('/users/sign_in'), via: %i[get post put patch delete]
   end
 
   root to: 'keywords#new'

@@ -17,9 +17,9 @@ class KeywordFileParserService
   def call
     return unless valid?
 
-    CSV.parse(file.download, headers: true) do |row|
-      keyword = row['Keywords']
-      keywords << keyword if keyword.present?
+    CSV.parse(file.download, **csv_options) do |row|
+      keyword = row[:keywords]
+      keywords << CGI.escapeHTML(keyword) if keyword.present?
     end
 
     keywords
@@ -28,4 +28,12 @@ class KeywordFileParserService
   private
 
   attr_reader :file, :keywords
+
+  def csv_options
+    { headers: true,
+      header_converters: :symbol,
+      skip_blanks: true,
+      quote_char: '"',
+      force_quotes: true }
+  end
 end
