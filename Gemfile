@@ -141,3 +141,10 @@ gem 'active_storage_validations', '~> 1.0', '>= 1.0.3'
 
 # Implements the W3C WebDriver protocol to automate popular browsers
 gem 'selenium-webdriver', '~> 4.8', '>= 4.8.1'
+
+# JSON:API serialization, error handling, filtering and pagination.
+gem 'jsonapi.rb', '~> 2.0', '>= 2.0.1'
+
+# Enables the user to sign in via an authentication token
+gem 'devise-token_authenticatable', '~> 1.1'
+
