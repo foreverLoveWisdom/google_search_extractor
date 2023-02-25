@@ -4,7 +4,9 @@
 10.times do
   User.create!(
     email: Faker::Internet.email,
-    password: 'password'
+    password: 'password',
+    authentication_token: Devise.friendly_token,
+    authentication_token_created_at: Time.zone.now
   )
 end
 
