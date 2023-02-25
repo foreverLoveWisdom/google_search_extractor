@@ -12,9 +12,7 @@ RSpec.describe 'API::V1::Sessions' do
     context 'with valid credentials' do
       before { post '/api/v1/signin', params: valid_credentials }
 
-      it 'returns status code 200' do
-        expect(response).to have_http_status(:ok)
-      end
+      include_examples 'response success status'
 
       it 'returns the user authentication token' do
         expect(json_attribute_for('authentication_token')).to eq(user.authentication_token)
@@ -28,9 +26,7 @@ RSpec.describe 'API::V1::Sessions' do
         expect(json_errors).to include('detail' => error_msg)
       end
 
-      it 'returns status code 422' do
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
+      include_examples 'response unprocessable entity status'
     end
 
     context 'with missing parameters' do
@@ -40,9 +36,7 @@ RSpec.describe 'API::V1::Sessions' do
         expect(json_errors).to include('detail' => error_msg)
       end
 
-      it 'returns status code 422' do
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
+      include_examples 'response unprocessable entity status'
     end
   end
 end
