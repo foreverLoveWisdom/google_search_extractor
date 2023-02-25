@@ -4,9 +4,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post '/signin', to: 'sessions#create'
+
+      get '/users/:user_id/keywords', to: 'keywords#index'
     end
   end
-
 
   devise_for :users, controllers: {
     registrations: 'users/registrations',

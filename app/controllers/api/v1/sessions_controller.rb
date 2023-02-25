@@ -3,8 +3,10 @@
 # Handling sessions routing logic
 module Api
   module V1
-    # Handling API V1 sessions routing logic
+    # Handling API V1 Sessions routing logic
     class SessionsController < BaseRestApiController
+      skip_before_action :authenticate_user!
+
       def create
         user = User.find_by(email: params[:email])
 

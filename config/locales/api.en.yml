@@ -1,0 +1,4 @@
+en:
+  api:
+    errors:
+      authentication_required: Sorry, you are not authorized to access this page. Please log in to continue or contact the administrator for further assistance.

@@ -15,7 +15,7 @@ RSpec.describe 'API::V1::Sessions' do
       include_examples 'response success status'
 
       it 'returns the user authentication token' do
-        expect(json_attribute_for('authentication_token')).to eq(user.authentication_token)
+        expect(json_attributes['authentication_token']).to eq(user.authentication_token)
       end
     end
 

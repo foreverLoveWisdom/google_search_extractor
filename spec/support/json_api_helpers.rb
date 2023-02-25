@@ -11,11 +11,7 @@ module JsonApiHelpers
   end
 
   def json_attributes
-    json_data['attributes']
-  end
-
-  def json_attribute_for(attribute)
-    json_attributes[attribute.to_s]
+    json_data.is_a?(Array) ? json_data.pluck('attributes') : json_data['attributes']
   end
 
   def json_errors
