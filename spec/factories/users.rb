@@ -26,6 +26,11 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password(min_length: 6) }
 
+    trait :with_authentication_token do
+      authentication_token { Faker::Crypto.md5 }
+      authentication_token_created_at { Time.zone.now }
+    end
+
     trait :with_keywords do
       transient do
         keywords_file { Rails.root.join('spec/fixtures/files/keywords.csv') }
