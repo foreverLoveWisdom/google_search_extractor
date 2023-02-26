@@ -9,6 +9,9 @@ class KeywordFileParserService
 
   validates :file, presence: true
 
+  MIN_KEYWORDS = 1
+  MAX_KEYWORDS = 100
+
   def initialize(file)
     @file = file
     @keywords = []
@@ -19,9 +22,13 @@ class KeywordFileParserService
 
     CSV.parse(file.download, **csv_options) do |row|
       keyword = row[:keywords]
-      keywords << CGI.escapeHTML(keyword) if keyword.present?
+      keyword = CGI.escapeHTML(keyword) if keyword.present?
+      @keywords << keyword if keyword.present?
+
+      break if @keywords.count > MAX_KEYWORDS
     end
 
+    validate_number_of_keywords
     keywords
   end
 
@@ -35,5 +42,11 @@ class KeywordFileParserService
       skip_blanks: true,
       quote_char: '"',
       force_quotes: true }
+  end
+
+  def validate_number_of_keywords
+    return if @keywords.count.between?(MIN_KEYWORDS, MAX_KEYWORDS)
+
+    errors.add(:base, I18n.t('keyword_file_parser_service.errors.invalid_number_of_keywords'))
   end
 end

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post '/signin', to: 'sessions#create'
 
       get '/users/:user_id/keywords', to: 'keywords#index'
+      post '/users/:user_id/keywords', to: 'keywords#create'
     end
   end
 

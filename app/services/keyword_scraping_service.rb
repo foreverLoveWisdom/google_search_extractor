@@ -9,8 +9,14 @@ class KeywordScrapingService
 
   SCRAPING_URL = 'https://www.google.com'
   SEARCH_RESULT = 'result-stats'
+  ADWORD_ADVERTISER = 'Ad'
+  LINK = 'a'
   SEARCH_FORM = 'q'
+  MIN_TIMEOUT = 3
+  MAX_TIMEOUT = 6
 
+  # NOTE: If the server IP is located in Europe, the terms and conditions page of the Google search service
+  # must be bypassed due to strict privacy regulations.
   def initialize(keyword)
     @keyword = keyword
   end
@@ -18,10 +24,14 @@ class KeywordScrapingService
   def call
     return unless valid?
 
-    setup_search_data
-    extract_search_data
-    quit_driver
-    build_search_result
+    begin
+      setup_search_data
+      extract_search_data
+      quit_driver
+      build_search_result
+    rescue StandardError => e
+      handle_exception_for(e)
+    end
   end
 
   private
@@ -33,8 +43,6 @@ class KeywordScrapingService
     navigate_to_scraping_url
     submit_keyword_search
     wait_until_search_result_displayed
-  rescue Selenium::WebDriver::Error::TimeOutError => e
-    handle_exception_for(e)
   end
 
   def handle_exception_for(exception)
@@ -77,13 +85,13 @@ class KeywordScrapingService
   end
 
   def randomize_timeout
-    rand(3..6)
+    rand(MIN_TIMEOUT..MAX_TIMEOUT)
   end
 
   def extract_search_data
     @total_search_result = @driver.find_element(id: SEARCH_RESULT).text
-    @total_links = @driver.find_elements(:css, 'a')
-    @adwords_advertisers = @driver.find_elements(:xpath, "//span[contains(text(), 'Ad')]")
+    @total_links = @driver.find_elements(:css, LINK)
+    @adwords_advertisers = @driver.find_elements(:xpath, "//span[contains(text(), '#{ADWORD_ADVERTISER}')]")
     @html = @driver.page_source
   end
 
