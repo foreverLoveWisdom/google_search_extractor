@@ -25,7 +25,7 @@ class KeywordFileParserService
       keyword = CGI.escapeHTML(keyword) if keyword.present?
       @keywords << keyword if keyword.present?
 
-      break if @keywords.count > 100
+      break if @keywords.count > MAX_KEYWORDS
     end
 
     validate_number_of_keywords
@@ -45,7 +45,7 @@ class KeywordFileParserService
   end
 
   def validate_number_of_keywords
-    return if @keywords.count.between?(1, 100)
+    return if @keywords.count.between?(MIN_KEYWORDS, MAX_KEYWORDS)
 
     errors.add(:base, I18n.t('keyword_file_parser_service.errors.invalid_number_of_keywords'))
   end

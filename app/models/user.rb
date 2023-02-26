@@ -52,7 +52,7 @@ class User < ApplicationRecord
       if keywords.length > MAX_KEYWORDS
         errors.add(:keyword_file, "must contain at most #{KeywordFileParserService::MAX_KEYWORDS} keywords")
       elsif keywords.empty?
-        errors.add(:keyword_file, 'must contain at least 1 keyword')
+        errors.add(:keyword_file, "must contain at least #{KeywordFileParserService::MIN_KEYWORDS} keyword")
       end
     else
       errors.add(:keyword_file, 'must be attached')
