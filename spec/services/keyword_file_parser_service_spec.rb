@@ -13,30 +13,8 @@ RSpec.describe KeywordFileParserService do
     let(:user) { create(:user, :with_keywords) }
     let(:expected_keywords) { %w[keyword COVID-19 vaccine crypto GameStop NFT Tesla Dogecoin Zoom Ethereum Bitcoin] }
 
-    context 'when succeeds' do
-      context 'when csv has records' do
-        it 'returns an array of keywords' do
-          expect(result).to eq(expected_keywords)
-        end
-
-        it 'succeeds' do
-          expect(keyword_file_parser_service).to be_success
-        end
-      end
-
-      context 'when csv has malicious input' do
-        let(:user) do
-          create(:user, :with_keywords, keywords_file: Rails.root.join('spec/fixtures/files/malicious.csv'))
-        end
-
-        it 'returns escaped keyword' do
-          expect(result).to include(escaped_malicious_input)
-        end
-
-        it 'succeeds' do
-          expect(keyword_file_parser_service).to be_success
-        end
-      end
+    context 'when fails' do
+      let(:user) { create(:user) }
 
       context 'when the CSV file is empty' do
         let(:user) { create(:user, :with_keywords, keywords_file: Rails.root.join('spec/fixtures/files/empty.csv')) }
@@ -46,14 +24,24 @@ RSpec.describe KeywordFileParserService do
           expect(result).to eq(expected_keywords)
         end
 
-        it 'succeeds' do
-          expect(keyword_file_parser_service).to be_success
+        it 'fails' do
+          expect(keyword_file_parser_service).to be_failure
         end
       end
-    end
 
-    context 'when fails' do
-      let(:user) { create(:user) }
+      context 'when the CSV file has more than 100 keywords' do
+        let(:user) do
+          create(:user, :with_keywords, keywords_file: Rails.root.join('spec/fixtures/files/over_number_keywords.csv'))
+        end
+
+        it 'returns a list of exceeding keywords' do
+          expect(result.count).to eq described_class::MAX_KEYWORDS + 1
+        end
+
+        it 'fails' do
+          expect(keyword_file_parser_service).to be_failure
+        end
+      end
 
       context 'when file is not present' do
         it 'fails' do

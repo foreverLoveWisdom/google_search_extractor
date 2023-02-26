@@ -9,3 +9,6 @@ en:
   keyword_scraping_service:
     errors:
       failed_to_scrape: "Something is wrong when scraping for: %{keyword}."
+  keyword_file_parser_service:
+    errors:
+      invalid_number_of_keywords: The number of keywords must be between 1 and 100
