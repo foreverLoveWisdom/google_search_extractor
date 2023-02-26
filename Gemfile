@@ -147,4 +147,3 @@ gem 'jsonapi.rb', '~> 2.0', '>= 2.0.1'
 
 # Enables the user to sign in via an authentication token
 gem 'devise-token_authenticatable', '~> 1.1'
-

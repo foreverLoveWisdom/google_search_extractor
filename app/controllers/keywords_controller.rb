@@ -2,8 +2,6 @@
 
 # Handling Keywords routing logic
 class KeywordsController < ApplicationController
-  before_action :authenticate_user!
-
   def index
     @keywords = keyword_repository.find_all_by_user(current_user.id)
   end
