@@ -11,6 +11,8 @@ class KeywordScrapingService
   SEARCH_RESULT = 'result-stats'
   SEARCH_FORM = 'q'
 
+  # NOTE: If the server IP is located in Europe, the terms and conditions page of the Google search service
+  # must be bypassed due to strict privacy regulations.
   def initialize(keyword)
     @keyword = keyword
   end
@@ -33,7 +35,7 @@ class KeywordScrapingService
     navigate_to_scraping_url
     submit_keyword_search
     wait_until_search_result_displayed
-  rescue Selenium::WebDriver::Error::TimeOutError => e
+  rescue StandardError => e
     handle_exception_for(e)
   end
 
