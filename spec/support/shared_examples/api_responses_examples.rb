@@ -11,9 +11,3 @@ RSpec.shared_examples 'response success status' do
     expect(response).to have_http_status(:ok)
   end
 end
-
-RSpec.shared_examples 'response accepted status' do
-  it 'returns status code 202' do
-    expect(response).to have_http_status(:accepted)
-  end
-end
