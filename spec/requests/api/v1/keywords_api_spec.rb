@@ -64,4 +64,61 @@ RSpec.describe 'API::V1::Keywords' do
       end
     end
   end
+
+  describe 'POST /api/v1/users/:user_id/keywords' do
+    let(:user) { create(:user) }
+    let(:upload_csv) { post("/api/v1/users/#{user.id}/keywords", headers:, params: { keyword_file: }) }
+    let(:keyword_file) { fixture_file_upload('keywords.csv') }
+
+    context 'when user is authenticated' do
+      let(:headers) { { 'Authorization' => "Bearer #{user.authentication_token}" } }
+
+      context 'when file is uploaded successfully' do
+        it 'returns status code 202' do
+          upload_csv
+
+          expect(response).to have_http_status(:accepted)
+        end
+
+        it 'enqueue scraping job' do
+          expect do
+            upload_csv
+          end.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
+        end
+      end
+
+      context 'when file upload fails' do
+        let(:keyword_file) { fixture_file_upload('keywords.xlsx') }
+        let(:error_msg) { I18n.t('keywords.upload_csv_failed') }
+
+        it 'returns unprocessable entity status' do
+          upload_csv
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'not enqueue scraping job' do
+          expect do
+            upload_csv
+          end.not_to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size)
+        end
+
+        it 'returns error message' do
+          upload_csv
+
+          expect(json_errors).to include('detail' => error_msg)
+        end
+      end
+    end
+
+    context 'when user is not authenticated' do
+      let(:headers) { { 'Authorization' => "Bearer #{Faker::Internet.password}" } }
+
+      it 'returns unauthorized' do
+        upload_csv
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
