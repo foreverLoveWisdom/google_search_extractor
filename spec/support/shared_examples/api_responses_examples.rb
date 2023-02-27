@@ -11,3 +11,9 @@ RSpec.shared_examples 'response success status' do
     expect(response).to have_http_status(:ok)
   end
 end
+
+RSpec.shared_examples 'response not found status' do
+  it 'returns status code 404' do
+    expect(response).to have_http_status(:not_found)
+  end
+end

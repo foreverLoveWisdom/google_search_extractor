@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
       get '/users/:user_id/keywords', to: 'keywords#index'
       post '/users/:user_id/keywords', to: 'keywords#create'
+      get '/keywords/:id/search_result', to: 'search_results#show'
     end
   end
 
