@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    # Handling API V1 Keywords routing logic
+    # Handling API V1 SearchResults routing logic
     class SearchResultsController < BaseRestApiController
       def show
         search_result = search_result_repository.find_by(keyword_id: params[:id])
