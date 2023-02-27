@@ -25,7 +25,7 @@
 - [x] Implement an API sign in endpoint.
 - [x] Implement an API endpoint to get the list of keywords.
 - [x] Implement an API endpoint to upload a keyword file.
-- [] Implement an API endpoint to get the search result information for each keyword.
+- [x] Implement an API endpoint to get the search result information for each keyword.
 
 ### Technical Requirements Checklist:
 
