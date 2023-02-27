@@ -1,0 +1,14 @@
+.row
+  .col-md-8.offset-md-2
+    %h1= @keyword.name
+    %table.table.table-striped
+      - search_result = @keyword.search_result
+      %thead
+        %tr
+          = render 'search_result_headers'
+      %tbody
+        %tr
+          = render 'search_result_infor', search_result: search_result
+.row
+  .col-md-8.offset-md-2
+    = link_to "Back to keywords", keywords_path, class: "btn btn-secondary"

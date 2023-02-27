@@ -1,4 +1,4 @@
-- if local_assigns[:include_link] || false
+- if (local_assigns[:include_link] && keyword.status == 'success') || false
   %td= link_to(keyword.name, keyword_path(keyword))
 - else
   %td= keyword.name
