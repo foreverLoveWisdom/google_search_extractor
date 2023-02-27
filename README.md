@@ -22,9 +22,9 @@
 
 ### API Checklist(Optional):
 
-- [] Implement an API sign in endpoint.
-- [] Implement an API endpoint to get the list of keywords.
-- [] Implement an API endpoint to upload a keyword file.
+- [x] Implement an API sign in endpoint.
+- [x] Implement an API endpoint to get the list of keywords.
+- [x] Implement an API endpoint to upload a keyword file.
 - [] Implement an API endpoint to get the search result information for each keyword.
 
 ### Technical Requirements Checklist:
@@ -56,11 +56,11 @@
 ### 🛠️ Installation:
 
 - Clone this repository.
-- Run bundle install to install the required gems.
-- Run rails db:create to create the database.
-- Run rails db:migrate to run migrations.
-- Run rails db:seed to seed the database with sample data.
-- Run rails server to start the Rails server.
+- Run `bundle install` to install the required gems.
+- Run `rails db:create` to create the database.
+- Run `rails db:migrate` to run migrations.
+- Run `rails db:seed` to seed the database with sample data.
+- Run `rails server` to start the Rails server.
 - Open your browser and go to http://localhost:3000/ to see the application running.
 
 ### 🔍 Running Tests:
