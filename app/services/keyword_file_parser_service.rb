@@ -9,9 +9,6 @@ class KeywordFileParserService
 
   validates :file, presence: true
 
-  MIN_KEYWORDS = 1
-  MAX_KEYWORDS = 100
-
   def initialize(file)
     @file = file
     @keywords = []
