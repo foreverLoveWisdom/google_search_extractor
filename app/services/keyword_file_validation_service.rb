@@ -11,6 +11,7 @@ class KeywordFileValidationService
   MAX_KEYWORDS = 100
 
   validates :file, presence: true
+  validates :current_user, presence: true
 
   def initialize(user, file)
     @current_user = user
