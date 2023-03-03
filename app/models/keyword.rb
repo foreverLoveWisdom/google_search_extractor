@@ -6,7 +6,7 @@
 #
 #  id         :bigint           not null, primary key
 #  name       :string           not null
-#  status     :integer          default("processing")
+#  status     :integer          default("pending")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
@@ -27,5 +27,5 @@ class Keyword < ApplicationRecord
   belongs_to :user
   has_one :search_result, dependent: :destroy
 
-  enum status: { processing: 2, success: 1, fail: 0 }
+  enum status: { pending: 3, processing: 2, success: 1, fail: 0 }
 end

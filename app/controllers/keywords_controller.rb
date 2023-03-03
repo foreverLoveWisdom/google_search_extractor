@@ -13,19 +13,17 @@ class KeywordsController < ApplicationController
   def new; end
 
   def create
-    if can_attach_keyword_file?
-      KeywordScrapingJob.perform_later(user_id: current_user.id, keyword_file_key: current_user.keyword_file.key)
-      redirect_to root_path, notice: I18n.t('keywords.upload_csv_successfully')
+    file_handler_service = handle_file_keyword
+
+    if file_handler_service.success?
+      queue_keyword_scraping_jobs(file_handler_service.result)
+      redirect_to keywords_path, notice: I18n.t('keywords.upload_csv_successfully')
     else
-      redirect_to root_path, alert: I18n.t('keywords.upload_csv_failed')
+      redirect_to root_path, alert: file_handler_service.errors.full_messages.to_sentence
     end
   end
 
   private
-
-  def can_attach_keyword_file?
-    keyword_params.present? && current_user.keyword_file.attach(keyword_params)
-  end
 
   def keyword_params
     params.permit(:keyword_file)[:keyword_file]
@@ -33,5 +31,16 @@ class KeywordsController < ApplicationController
 
   def keyword_repository
     @keyword_repository ||= KeywordRepository.new
+  end
+
+  def handle_file_keyword
+    FileKeywordHandlerService.call(user: current_user, file: keyword_params)
+  end
+
+  # NOTE: Extract to a separate service if logic gets more complex
+  def queue_keyword_scraping_jobs(keyword_ids)
+    keyword_ids.each do |keyword_id|
+      KeywordScrapingJob.perform_later(keyword_id)
+    end
   end
 end

@@ -61,11 +61,20 @@ class KeywordScrapingService
 
   def add_driver_options(options = Selenium::WebDriver::Chrome::Options.new)
     options.add_argument('--headless')
+    options.add_argument("--user-agent=#{user_agent}")
     options
   end
 
-  def user_agent(custom_user_agent = 'chrome')
-    generate_user_agent(navigator: custom_user_agent)
+  def user_agent
+    chrome_version = rand(70..96)
+    chrome_minor_version = rand(0..999)
+    webkit_version = rand(537..603)
+    safari_version = rand(12..15)
+    platform = %w[Windows Linux].sample
+
+    # rubocop:disable Layout/LineLength
+    "Mozilla/5.0 (#{platform}; Win64; x64) AppleWebKit/#{webkit_version}.36 (KHTML, like Gecko) Chrome/#{chrome_version}.#{chrome_minor_version} Safari/#{safari_version}.36"
+    # rubocop:enable Layout/LineLength
   end
 
   def navigate_to_scraping_url

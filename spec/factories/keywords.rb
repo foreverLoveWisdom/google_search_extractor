@@ -6,7 +6,7 @@
 #
 #  id         :bigint           not null, primary key
 #  name       :string           not null
-#  status     :integer          default("processing")
+#  status     :integer          default("pending")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
@@ -25,6 +25,10 @@ FactoryBot.define do
   factory :keyword do
     name { Faker::Lorem.word }
     association :user, factory: :user
+
+    trait :pending do
+      status { 3 }
+    end
 
     trait :processing do
       status { 2 }

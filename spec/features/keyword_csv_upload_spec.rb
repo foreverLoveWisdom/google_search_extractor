@@ -24,7 +24,7 @@ RSpec.describe 'Keyword CSV upload' do
 
       click_button 'Upload'
 
-      expect(page).to have_content('The file must be in CSV format and must be present.')
+      expect(page).to have_content("File can't be blank")
     end
 
     it 'shows an error message if file is not a CSV' do
@@ -33,7 +33,7 @@ RSpec.describe 'Keyword CSV upload' do
       attach_file('keyword_file', Rails.root.join('spec/fixtures/files/keywords.xlsx'))
       click_button 'Upload'
 
-      expect(page).to have_content('The file must be in CSV format and must be present.')
+      expect(page).to have_content('The file must be in the CSV format and must be present.')
     end
   end
 

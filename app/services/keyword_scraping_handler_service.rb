@@ -5,70 +5,86 @@ class KeywordScrapingHandlerService
   prepend SimpleCommand
   include ActiveModel::Validations
 
-  validates :user_id, presence: true
-  validates :keywords, presence: true
+  validates :keyword_id, presence: true
 
-  def initialize(user_id:, keywords:,
+  def initialize(keyword_id:,
                  dependencies: { scraping_service: KeywordScrapingService,
                                  keyword_repository: KeywordRepository.new,
                                  search_result_repository: SearchResultRepository.new })
-    @user_id = user_id
-    @keywords = keywords
+    @keyword_id = keyword_id
     @scraping_service = dependencies[:scraping_service]
     @keyword_repository = dependencies[:keyword_repository]
     @search_result_repository = dependencies[:search_result_repository]
-    @created_search_result_ids = []
   end
 
   def call
     return unless valid?
 
-    keywords.each do |keyword|
-      @scraper = create_keyword_and_execute_scraper(keyword)
-      process_scraping_result(keyword)
+    begin
+      keyword = find_keyword_and_update_status
+      return if errors.any?
+
+      @scraper = execute_scraper(keyword.name)
+      scraper_result_handler
     rescue ActiveRecord::RecordInvalid => e
       handle_exception_for(e)
-      next
     end
-
-    created_search_result_ids
   end
 
   private
 
-  attr_reader :user_id,
-              :keywords,
+  attr_reader :keyword_id,
               :scrapping_service,
               :keyword_repository,
-              :search_result_repository,
-              :created_search_result_ids
+              :search_result_repository
 
-  def create_keyword_and_execute_scraper(keyword)
-    @persisted_keyword = create_keyword!(keyword)
-    KeywordScrapingService.call(keyword)
+  def find_keyword_and_update_status
+    keyword = keyword_repository.find_by(id: keyword_id)
+    return unless keyword_present?(keyword)
+    return unless keyword_pending?(keyword)
+
+    keyword_repository.update!(keyword_id, status: :processing)
+    keyword
   end
 
-  def create_keyword!(keyword)
-    keyword_repository.create!(user_id:, name: keyword)
-  end
-
-  def process_scraping_result(keyword)
-    if @scraper.success?
-      handle_scraping_success
+  def keyword_present?(keyword)
+    if keyword.present?
+      true
     else
-      handle_scraping_failure(keyword)
+      errors.add(:base, 'Keyword not found')
+      false
     end
   end
 
-  def handle_scraping_success
-    update_keyword_status!(Keyword.statuses[:success])
-    persisted_search_result = create_search_result!
-    created_search_result_ids << persisted_search_result.id
+  def keyword_pending?(keyword)
+    if keyword.pending?
+      true
+    else
+      errors.add(:base, 'Keyword status is not pending')
+      false
+    end
   end
 
-  def handle_scraping_failure(keyword)
-    update_keyword_status!(Keyword.statuses[:fail])
-    errors.add(:base, I18n.t('keyword_scraping_handler_service.errors.scraper_failed', keyword:))
+  def scraper_result_handler
+    if @scraper.success?
+      scraper_success_handler
+    else
+      scraper_failure_handler
+    end
+  end
+
+  def scraper_success_handler
+    keyword_repository.update!(keyword_id, status: :success)
+    create_search_result!
+  end
+
+  def scraper_failure_handler
+    keyword_repository.update!(keyword_id, status: :fail)
+    errors.add(:base, @scraper.errors.full_messages.to_sentence)
+  end
+
+  def execute_scraper(keyword)
+    KeywordScrapingService.call(keyword)
   end
 
   def handle_exception_for(exception)
@@ -81,11 +97,11 @@ class KeywordScrapingHandlerService
     Rails.logger.error exception.backtrace.inspect
   end
 
-  def update_keyword_status!(status)
-    keyword_repository.update!(@persisted_keyword.id, status:)
+  def create_search_result!
+    search_result_repository.create!(search_result_params)
   end
 
-  def create_search_result!
-    search_result_repository.create!({ keyword_id: @persisted_keyword.id }.merge(@scraper.result))
+  def search_result_params
+    { keyword_id: }.merge(@scraper.result)
   end
 end

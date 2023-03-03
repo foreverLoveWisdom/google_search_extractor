@@ -1,7 +1,10 @@
 en:
   keywords:
     upload_csv_successfully: CSV file was uploaded successfully.
-    upload_csv_failed: The file must be in CSV format and must be present.
+    errors:
+      min_keywords: The file must contain at least %{min_keywords} keywords.
+      max_keywords: The file must contain at most %{max_keywords} keywords.
+      attach_file_failed: The file must be in the CSV format and must be present.
   keyword_scraping_handler_service:
     errors:
       scraper_failed: "The scraping for the keyword: %{keyword}, has failed."

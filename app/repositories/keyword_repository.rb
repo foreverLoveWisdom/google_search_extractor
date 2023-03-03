@@ -5,6 +5,7 @@ class KeywordRepository
   delegate :create!, to: :model
   delegate :update!, to: :model
   delegate :find_by, to: :model
+  delegate :create, to: :model
 
   def initialize(model = Keyword)
     @model = model
