@@ -53,11 +53,17 @@
 - Ruby 3.2.1
 - PostgreSQL
 
-### Database Connection Pooling
+### 📨 Backend Job Adapter:
 
-- In this project, we use the `:async` adapter for running background jobs, such as scraping keywords on Google and saving the results into the database. If you plan to run a large number of background jobs simultaneously, you may need to adjust the size of the database connection pool in the development environment.
+- Use `:async` as the default ActiveJob queue adapter, and we don't need to configure it.⚙️
+- It will be run in the same process as the web server, so we don't need to run a separate process to process the jobs.🔌
+- It is good for development and testing, but not for production.⚠️
 
-- By default, Rails sets the connection pool size to 5 in the development environment. However, this may not be sufficient for running a large number of background jobs. As a starting point, we recommend setting the pool size to a value between 20 and 50, depending on the available resources on your development machine.
+### 🔗 Database Connection Pooling:
+
+- In this project, currently using the `:async` adapter for running background jobs(on the development environment), such as scraping keywords on Google and saving the results into the database. If you plan to run a large number of background jobs simultaneously, you may need to adjust the size of the database connection pool in the development environment.💻
+
+- By default, Rails sets the connection pool size to 5 in the development environment. However, this may not be sufficient for running a large number of background jobs. As a starting point, we recommend setting the pool size to a value between 20 and 50, depending on the available resources on your development machine.📈
 
 - To adjust the connection pool size, you can add the following line to your `config/database.yml` file:
 
@@ -65,11 +71,12 @@
 development:
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 20 } %>
 ```
+
 - You can replace `20` with a different value that suits your needs. For more information on connection pooling, please refer to the [Rails configuration guide](https://guides.rubyonrails.org/configuring.html#database-pooling).
 
 ### 🛠️ Installation:
 
-- Temporarily disable yarn build-related process in foreman and remove yarn build script due to a yarn script build bug. I will investigate further.🤔
+- Temporarily disable yarn build-related process in `foreman` and remove `yarn build script` due to a yarn script build bug 🕷. I will investigate further.🤔
 - Clone this repository.
 - Run `yard install` to install the dependencies.
 - Run `bundle install` to install the required gems.
