@@ -23,7 +23,7 @@ class FileKeywordHandlerService
   def call
     return unless valid?
 
-    file_validation = file_validation_service.call(user, file)
+    file_validation = file_validation_service.new(user, file).call
 
     if file_validation.success?
       parse_keywords
