@@ -30,32 +30,6 @@ class User < ApplicationRecord
 
   has_one_attached :keyword_file
   validates :keyword_file, content_type: 'text/csv'
-  validate :validate_keyword_count
-  # temporarily disable validate_keyword_count callback
-  skip_callback :validate, :before, :validate_keyword_count, if: :skip_validate_keyword_count?
 
   has_many :keywords, dependent: :destroy
-
-  private
-
-  def skip_validate_keyword_count?
-    true
-  end
-
-  # TODO: Investigate why the 'validate_keyword_count' method is throwing an ActiveStorage::FileNotFoundError.
-  # This error may occur if the file attached to the 'keyword_file' attribute cannot be found in the storage location.
-  # Verify that the storage service is correctly configured and the file exists in the expected location.
-  def validate_keyword_count
-    if keyword_file.attached?
-      keywords = keyword_file.download.split(/\r?\n/)
-
-      if keywords.length > MAX_KEYWORDS
-        errors.add(:keyword_file, "must contain at most #{KeywordFileParserService::MAX_KEYWORDS} keywords")
-      elsif keywords.empty?
-        errors.add(:keyword_file, "must contain at least #{KeywordFileParserService::MIN_KEYWORDS} keyword")
-      end
-    else
-      errors.add(:keyword_file, 'must be attached')
-    end
-  end
 end
