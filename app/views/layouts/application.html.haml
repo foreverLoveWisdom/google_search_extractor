@@ -7,8 +7,7 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
-    %script{crossorigin: "anonymous", integrity: "sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==", referrerpolicy: "no-referrer", src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"}
-    %script{crossorigin: "anonymous", integrity: "sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==", referrerpolicy: "no-referrer", src: "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"}
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   %body
     .container-fluid
       %nav.navbar.navbar-expand-lg.navbar-light.bg-light
